@@ -2,5 +2,5 @@
 
 Neurio Plugin for Indigo
 
-http://neur.io - energy monitoring sensor
-http://www.indigodomo.com - smart home software for macOS
+http://neur.io - home energy monitor  
+http://www.indigodomo.com - smart home software (macOS)
