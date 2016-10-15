@@ -174,11 +174,11 @@ class Plugin(indigo.PluginBase):
 
     ########################################
     def startup(self):
-        self.debugLog(u"startup called")
+        self.debugLog("startup called")
         self._neurioSync()
         
     def shutdown(self):
-        self.debugLog(u"shutdown called")    
+        self.debugLog("shutdown called")    
        
     ######################################## 
     def _neurioSync(self):        
@@ -191,11 +191,11 @@ class Plugin(indigo.PluginBase):
         # Create folder for Neurio sensors and appliances
         if "Neurio" in indigo.devices.folders:
             folderId = indigo.devices.folders.getId("Neurio")
-            self.debugLog(u"neurio folder found: " + str(folderId)) 
+            self.debugLog("neurio folder found: " + str(folderId)) 
         else:
             neurioFolder = indigo.devices.folder.create("Neurio")
             folderId = neurioFolder.id
-            self.debugLog(u"neurio folder created: " + str(folderId))  
+            self.debugLog("neurio folder created: " + str(folderId))  
 
         # List of devices available
         locations = []
@@ -209,8 +209,8 @@ class Plugin(indigo.PluginBase):
             name = location["name"]
             item = id, name
             locations.append(item)
-                
-            # Add sensors
+            
+            # For each sensor in location
             if bool(self.pluginPrefs["addSensors"]):
                 for sensor in location["sensors"]:
                     id = sensor["sensorId"]
@@ -218,14 +218,15 @@ class Plugin(indigo.PluginBase):
                     item = id, name
                     sensors.append(item)
         
-        # Add appliances
+        # For each location
         if bool(self.pluginPrefs["addAppliances"]):
             for location in locations:
+                id = location[0]
                 for appliance in nc.get_appliances(id):
                     id = appliance["id"]
                     name = appliance["label"]
                     item = id, name
-                    appliances.append(item)                        
+                    appliances.append(item)                      
         
         # Sync devices
         self._neurioDevices(sensors, "neurioSensor", folderId)
@@ -257,17 +258,17 @@ class Plugin(indigo.PluginBase):
                     # Indigo device already exists
                     if address == deviceId:                           
                         found = True
-                        self.debugLog(u"indigo device found: " + id + " (" + address + ")")
+                        self.debugLog("indigo device found: " + id + " (" + address + ")")
                         
                         # Move Neurio devices to folder
                         if folder != folderId:
                             indigo.device.moveToFolder(dev.id, value=folderId)
-                            self.debugLog(u"indigo device moved to folder: " + id + " (" + str(folderId)) + ")"
+                            self.debugLog("indigo device moved to folder: " + id + " (" + str(folderId)) + ")"
                             break
             
             # Create new Indigo device
             if found == False:
-                self.debugLog(u"indigo device not found, creating new device: " + deviceId)
+                self.debugLog("indigo device not found, creating new device: " + deviceId)
                 neurioDevice = indigo.device.create(protocol=indigo.kProtocol.Plugin,
                     address = deviceId,
                     name = deviceName, 
@@ -297,12 +298,12 @@ class Plugin(indigo.PluginBase):
                 for device in devices:
                     deviceId = device[0]                   
                     if deviceId == address:
-                        self.debugLog(u"neurio device found: " + address + " (" + id + ")")
+                        self.debugLog("neurio device found: " + address + " (" + id + ")")
                         found = True
                 
                 # Remove missing devices
                 if found == False:                        
-                    self.debugLog(u"neurio device not found: " + address + " (" + id + "), removing indigo device")
+                    self.debugLog("neurio device not found: " + address + " (" + id + "), removing indigo device")
                     indigo.device.delete(dev)        
 
     ########################################
@@ -431,38 +432,38 @@ class Plugin(indigo.PluginBase):
             enddate = now.strftime(dt_format)            
             stats = nc.get_appliance_stats(appliance_id=dev.address, start=startdate, end=enddate, granularity="unknown", per_page="1", page="1")
             
-            for item in stats:
-                for key, value in item.iteritems():
-                    if key == "averagePower":
-                        averagePower = item[key]
-                    if key == "timeOn":
-                        timeOn = item[key]
-                    if key == "energy":
-                        energy = item[key]
-                    if key == "usagePercentage":
-                        usagePercentage = item[key]
-                    if key == "lastEvent":
-                        event = item[key]
-                        for key, value in event.iteritems(): 
-                            if key == "status":
-                                status = event[key]
-                            if key == "end":
-                                end = event[key]
-                            if key == "isConfirmed":
-                                isConfirmed = event[key]
+            #for item in stats:
+            #    for key, value in item.iteritems():
+            #        if key == "averagePower":
+            #            averagePower = item[key]
+            #        if key == "timeOn":
+            #            timeOn = item[key]
+            #        if key == "energy":
+            #            energy = item[key]
+            #        if key == "usagePercentage":
+            #            usagePercentage = item[key]
+            #        if key == "lastEvent":
+            #            event = item[key]
+            #            for key, value in event.iteritems(): 
+            #                if key == "status":
+            #                    status = event[key]
+            #                if key == "end":
+            #                    end = event[key]
+            #                if key == "isConfirmed":
+            #                    isConfirmed = event[key]
 
-            appliance = dev.name
-            appliance += " (" + str(dev.id) + ")"
-            appliance += " " + str(startdate)
-            appliance += " " + str(enddate)
-            appliance += " " + str(averagePower)
-            appliance += " " + str(timeOn)
-            appliance += " " + str(energy)
-            appliance += " " + str(usagePercentage)
-            appliance += " " + str(status)
-            appliance += " " + str(end)
-            appliance += " " + str(isConfirmed)
-            self.debugLog(appliance)
+            #appliance = dev.name
+            #appliance += " (" + str(dev.id) + ")"
+            #appliance += " " + str(startdate)
+            #appliance += " " + str(enddate)
+            #appliance += " " + str(averagePower)
+            #appliance += " " + str(timeOn)
+            #appliance += " " + str(energy)
+            #appliance += " " + str(usagePercentage)
+            #appliance += " " + str(status)
+            #appliance += " " + str(end)
+            #appliance += " " + str(isConfirmed)
+            #self.debugLog(appliance)
     
     #########################################        
     def _neurioRefreshAll(self):      
@@ -512,7 +513,7 @@ class Plugin(indigo.PluginBase):
         ###### BEEP ######
         if action.deviceAction == indigo.kDeviceGeneralAction.Beep:
             # Beep the hardware module (dev) here:
-            indigo.server.log(u"sent \"%s\" %s" % (dev.name, "beep request"))
+            indigo.server.log("sent \"%s\" %s" % (dev.name, "beep request"))
 
         ###### ENERGY UPDATE ######
         elif action.deviceAction == indigo.kDeviceGeneralAction.EnergyUpdate:
@@ -522,7 +523,7 @@ class Plugin(indigo.PluginBase):
         ###### ENERGY RESET ######
         elif action.deviceAction == indigo.kDeviceGeneralAction.EnergyReset:
             # Request that the hardware module (dev) reset its accumulative energy usage data here:
-            indigo.server.log(u"sent \"%s\" %s" % (dev.name, "energy usage reset"))           
+            indigo.server.log("sent \"%s\" %s" % (dev.name, "energy usage reset"))           
             # And then tell Indigo to reset it by just setting the value to 0. This will automatically reset Indigo's time stamp for the accumulation.
             dev.updateStateOnServer("accumEnergyTotal", 0.0)
 
