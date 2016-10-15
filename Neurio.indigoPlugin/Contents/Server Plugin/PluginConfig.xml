@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<PluginConfig>
+    <Field id="clientID" type="textfield" defaultValue="">
+        <Label>Client ID:</Label>
+    </Field>
+    <Field id="clientSecret" type="textfield" defaultValue="">
+        <Label>Client Secret:</Label>
+    </Field>
+    <Field id="updateSeconds" type="textfield" defaultValue="300">
+        <Label>Update in seconds:</Label>
+    </Field>
+    <Field id="addSensors" type="checkbox" defaultValue="false">
+        <Label>Add Sensors:</Label>
+    </Field>
+    <Field id="addAppliances" type="checkbox" defaultValue="false">
+        <Label>Add Appliances:</Label>
+    </Field>
+    <Field id="debugMode" type="checkbox" defaultValue="false">
+        <Label>Debug Log:</Label>
+    </Field>
+</PluginConfig>

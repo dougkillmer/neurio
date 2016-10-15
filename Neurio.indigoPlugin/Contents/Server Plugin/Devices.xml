@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<Devices>
+    <Device type="custom" id="neurioSensorLAN">
+        <Name>Neurio Sensor (Local Network)</Name>
+        <ConfigUI>
+            <Field id="address" type="textfield">
+                <Label>IP Address:</Label>
+            </Field>
+            <Field type="checkbox" id="SupportsEnergyMeter" defaultValue="true" hidden="true" />
+			<Field type="checkbox" id="SupportsEnergyMeterCurPower" defaultValue="true" hidden="true">
+				<Label>Supports power load:</Label>
+				<Description>Show current power load (Watts) in UI</Description>
+			</Field>
+        </ConfigUI>
+        <States>
+            <State id="consumptionPower" readonly="YES">
+                <ValueType>Float</ValueType>
+                <TriggerLabel>Current Consumption (W)</TriggerLabel>
+                <ControlPageLabel>Current Consumption</ControlPageLabel>
+            </State> 
+        </States>
+    </Device>
+    <Device type="custom" id="neurioSensor">
+        <Name>Neurio Sensor</Name>
+        <ConfigUI>
+            <Field id="address" type="textfield" readonly="YES">
+                <Label>Sensor ID:</Label>
+            </Field>
+            <Field type="checkbox" id="SupportsEnergyMeter" defaultValue="true" hidden="true" />
+			<Field type="checkbox" id="SupportsEnergyMeterCurPower" defaultValue="true" hidden="true">
+				<Label>Supports power load:</Label>
+				<Description>Show current power load (Watts) in UI</Description>
+			</Field>
+        </ConfigUI>
+        <States>
+            <State id="consumptionPower" readonly="YES">
+                <ValueType>Float</ValueType>
+                <TriggerLabel>Current Consumption (W)</TriggerLabel>
+                <ControlPageLabel>Current Consumption</ControlPageLabel>
+            </State>           
+            <State id="generationPower" readonly="YES">
+                <ValueType>Float</ValueType>
+                <TriggerLabel>Current Generation (W)</TriggerLabel>
+                <ControlPageLabel>Current Generation</ControlPageLabel>
+            </State>
+            <State id="consumptionEnergy" readonly="YES">
+                <ValueType>Float</ValueType>
+                <TriggerLabel>Total Consumption (W)</TriggerLabel>
+                <ControlPageLabel>Total Consumption</ControlPageLabel>
+            </State> 
+            <State id="generationEnergy" readonly="YES">
+                <ValueType>Float</ValueType>
+                <TriggerLabel>Total Generation (W)</TriggerLabel>
+                <ControlPageLabel>Total Generation</ControlPageLabel>
+            </State>
+            <State id="statsBegin" readonly="YES">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Stats Begin</TriggerLabel>
+                <ControlPageLabel>Stats Begin</ControlPageLabel>
+            </State>
+            <State id="statsEnd" readonly="YES">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Stats End</TriggerLabel>
+                <ControlPageLabel>Stats End</ControlPageLabel>
+            </State>
+        </States>
+    </Device>
+    <Device type="custom" id="neurioAppliance">
+        <Name>Neurio Appliance</Name>
+        <ConfigUI>
+            <Field id="address" type="textfield" readonly="YES">
+                <Label>Appliance ID:</Label>
+            </Field>
+        </ConfigUI>
+        <States>
+            <State id="currentStatus">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Appliance Status</TriggerLabel>
+				<TriggerLabelPrefix>Appliance is</TriggerLabelPrefix>
+                <ControlPageLabel>Appliance Status</ControlPageLabel>
+            </State>
+            <State id="statsBegin" readonly="YES">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Stats Begin</TriggerLabel>
+                <ControlPageLabel>Stats Begin</ControlPageLabel>
+            </State>
+            <State id="statsEnd" readonly="YES">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Stats End</TriggerLabel>
+                <ControlPageLabel>Stats End</ControlPageLabel>
+            </State>
+        </States>
+        <UiDisplayStateId>currentStatus</UiDisplayStateId>
+    </Device>
+</Devices>
